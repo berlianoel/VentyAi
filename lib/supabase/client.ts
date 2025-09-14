@@ -1,0 +1,17 @@
+import { createBrowserClient } from "@supabase/ssr"
+
+export function createClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://fyrgawcllvttxsknyoue.supabase.co"
+  const supabaseAnonKey =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ5cmdhd2NsbHZ0dHhza255b3VlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxNTkyNzgsImV4cCI6MjA3MjczNTI3OH0.6f9nYeAN9w6UQra3aeL3Ilwl_hPXcZU4c7cxJPNVdV8"
+
+  return createBrowserClient(supabaseUrl, supabaseAnonKey, {
+    auth: {
+      storage: typeof window !== "undefined" ? window.localStorage : undefined,
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true,
+    },
+  })
+}
